@@ -91,7 +91,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins("http://localhost:4200",
+            "https://black-island-0da621a00.7.azurestaticapps.net")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });

@@ -6,7 +6,7 @@ import { CreateProjectModel, Project } from '../model/project.model';
   providedIn: 'root',
 })
 export class ProjectService {
-  private apiUrl = 'https://localhost:7063/api/projects';
+  private apiUrl = 'taskmanager-vm-1-hzanehf9h0a2aned.centralindia-01.azurewebsites.net/api';
 
   constructor(private http: HttpClient) {}
 

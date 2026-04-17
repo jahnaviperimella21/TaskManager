@@ -7,7 +7,7 @@ import { Task, UpdateStatusModel } from '../model/task.model';
   providedIn: 'root',
 })
 export class DeveloperService {
-  private apiUrl = 'https://localhost:7063/api/developer';
+  private apiUrl = 'taskmanager-vm-1-hzanehf9h0a2aned.centralindia-01.azurewebsites.net/api';
 
   constructor(private http: HttpClient) {}
 

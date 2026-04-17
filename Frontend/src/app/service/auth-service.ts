@@ -7,7 +7,7 @@ import { LoginModel, RegisterModel, AuthResponse } from '../model/user.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://localhost:7063/api/auth';
+  private apiUrl = 'taskmanager-vm-1-hzanehf9h0a2aned.centralindia-01.azurewebsites.net/api';
 
   constructor(
     private http: HttpClient,

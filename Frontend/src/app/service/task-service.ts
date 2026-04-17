@@ -6,7 +6,7 @@ import { CreateTaskModel, Task } from '../model/task.model';
   providedIn: 'root',
 })
 export class TaskService {
-  private apiUrl = 'https://localhost:7063/api/tasks';
+  private apiUrl = 'taskmanager-vm-1-hzanehf9h0a2aned.centralindia-01.azurewebsites.net/api';
 
   constructor(private http: HttpClient) {}
 
