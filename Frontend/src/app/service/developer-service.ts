@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CreateCommentModel, Comment } from '../model/comment.model';
 import { Task, UpdateStatusModel } from '../model/task.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DeveloperService {
-  private apiUrl = 'taskmanager-vm-1-hzanehf9h0a2aned.centralindia-01.azurewebsites.net/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

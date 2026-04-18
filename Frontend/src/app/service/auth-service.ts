@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { LoginModel, RegisterModel, AuthResponse } from '../model/user.model';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'taskmanager-vm-1-hzanehf9h0a2aned.centralindia-01.azurewebsites.net/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient,
