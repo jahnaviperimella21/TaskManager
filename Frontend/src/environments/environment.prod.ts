@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://taskmanager-vm-1-hzanehf9h0a2aned.centralindia-01.azurewebsites.net/api',
+  apiUrl: 'https://pretty-light-production-db3c.up.railway.app/api',
 };
