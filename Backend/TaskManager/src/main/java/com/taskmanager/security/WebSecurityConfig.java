@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import java.util.Arrays;
 
 @Configuration
@@ -23,6 +24,11 @@ import java.util.Arrays;
 public class WebSecurityConfig {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("/", "/index.html", "/*.js", "/*.css", "/*.ico", "/assets/**", "/static/**", "/favicon.ico");
+    }
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
