@@ -9,6 +9,7 @@ public class CreateTaskRequest {
     private TaskPriority priority;
     private LocalDateTime deadline;
     private String assignedToEmail;
+    private Long projectId;
 
     public CreateTaskRequest() {}
     public String getTitle() { return title; }
@@ -21,4 +22,6 @@ public class CreateTaskRequest {
     public void setDeadline(LocalDateTime deadline) { this.deadline = deadline; }
     public String getAssignedToEmail() { return assignedToEmail; }
     public void setAssignedToEmail(String assignedToEmail) { this.assignedToEmail = assignedToEmail; }
+    public Long getProjectId() { return projectId; }
+    public void setProjectId(Long projectId) { this.projectId = projectId; }
 }

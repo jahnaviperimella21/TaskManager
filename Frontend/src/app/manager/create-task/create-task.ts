@@ -16,7 +16,9 @@ export class CreateTaskComponent implements OnInit {
   title = '';
   description = '';
   projectId = 0;
-  assignedToUserId = '';
+  assignedToEmail = '';
+  priority = 'MEDIUM';
+  deadline = '';
   projects: any[] = [];
   developers: any[] = [];
   errorMessage = '';
@@ -32,6 +34,11 @@ export class CreateTaskComponent implements OnInit {
   ngOnInit() {
     this.loadProjects();
     this.loadDevelopers();
+    
+    // Set default deadline to tomorrow
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    this.deadline = tomorrow.toISOString().slice(0, 16);
   }
 
   loadProjects() {
@@ -61,7 +68,7 @@ export class CreateTaskComponent implements OnInit {
   }
 
   create() {
-    if (!this.title || !this.description || !this.projectId || !this.assignedToUserId) {
+    if (!this.title || !this.description || !this.projectId || !this.assignedToEmail || !this.priority || !this.deadline) {
       this.errorMessage = 'Please fill all fields';
       return;
     }
@@ -74,15 +81,17 @@ export class CreateTaskComponent implements OnInit {
         title: this.title,
         description: this.description,
         projectId: this.projectId,
-        assignedToUserId: this.assignedToUserId,
+        assignedToEmail: this.assignedToEmail,
+        priority: this.priority,
+        deadline: this.deadline
       })
       .subscribe({
         next: () => {
           this.router.navigate(['/manager/tasks']);
         },
-        error: () => {
+        error: (err) => {
           this.loading = false;
-          this.errorMessage = 'Failed to create task. Try again.';
+          this.errorMessage = 'Failed to create task. ' + (err.error?.message || 'Try again.');
           this.cdr.detectChanges();
         },
       });

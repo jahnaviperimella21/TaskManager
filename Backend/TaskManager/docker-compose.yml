@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: taskmanager-db
+    environment:
+      - POSTGRES_USER=taskuser
+      - POSTGRES_PASSWORD=taskpassword
+      - POSTGRES_DB=taskdb
+    ports:
+      - "5432:5432"
+    networks:
+      - taskmanager-network
+
+  backend:
+    build:
+      context: ./Backend/TaskManager
+      dockerfile: Dockerfile
+    container_name: taskmanager-backend
+    ports:
+      - "5000:8080"
+    depends_on:
+      - postgres
+    networks:
+      - taskmanager-network
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: taskmanager-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - taskmanager-network
+
+networks:
+  taskmanager-network:
+    driver: bridge

@@ -44,6 +44,15 @@ label {
   font-weight: 500;
 }
 
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.half {
+  flex: 1;
+}
+
 .form-input {
   width: 100%;
   padding: 10px;

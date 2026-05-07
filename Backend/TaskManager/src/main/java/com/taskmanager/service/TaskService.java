@@ -1,10 +1,13 @@
 package com.taskmanager.service;
 
+import com.taskmanager.dto.CommentResponse;
 import com.taskmanager.dto.CreateTaskRequest;
 import com.taskmanager.dto.TaskResponse;
 import com.taskmanager.dto.UpdateStatusRequest;
 import com.taskmanager.dto.UpdateTaskRequest;
+import com.taskmanager.dto.UserResponse;
 import com.taskmanager.entity.*;
+import com.taskmanager.repository.CommentRepository;
 import com.taskmanager.repository.ProjectRepository;
 import com.taskmanager.repository.TaskRepository;
 import com.taskmanager.repository.UserRepository;
@@ -24,8 +27,11 @@ public class TaskService {
     @Autowired
     UserRepository userRepository;
 
-    public TaskResponse createTask(Long projectId, CreateTaskRequest request) {
-        Project project = projectRepository.findById(projectId).orElseThrow();
+    @Autowired
+    CommentRepository commentRepository;
+
+    public TaskResponse createTask(CreateTaskRequest request) {
+        Project project = projectRepository.findById(request.getProjectId()).orElseThrow();
         User assignedTo = userRepository.findByEmail(request.getAssignedToEmail()).orElseThrow();
 
         TaskItem task = TaskItem.builder()
@@ -72,6 +78,56 @@ public class TaskService {
         User user = userRepository.findByEmail(email).orElseThrow();
         return taskRepository.findByAssignedTo(user).stream()
                 .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<UserResponse> getDevelopers() {
+        return userRepository.findByRolesName(ERole.ROLE_DEVELOPER).stream()
+                .map(user -> UserResponse.builder()
+                        .id(user.getId())
+                        .email(user.getEmail())
+                        .fullName(user.getFullName())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    public TaskResponse getTaskById(Long id) {
+        TaskItem task = taskRepository.findById(id).orElseThrow();
+        return mapToResponse(task);
+    }
+
+    public CommentResponse addComment(Long taskId, String email, String content) {
+        TaskItem task = taskRepository.findById(taskId).orElseThrow();
+        User user = userRepository.findByEmail(email).orElseThrow();
+
+        Comment comment = Comment.builder()
+                .content(content)
+                .task(task)
+                .user(user)
+                .createdAt(java.time.LocalDateTime.now())
+                .build();
+
+        comment = commentRepository.save(comment);
+
+        return CommentResponse.builder()
+                .id(comment.getId())
+                .content(comment.getContent())
+                .userEmail(user.getEmail())
+                .userFullName(user.getFullName())
+                .createdAt(comment.getCreatedAt())
+                .build();
+    }
+
+    public List<CommentResponse> getComments(Long taskId) {
+        TaskItem task = taskRepository.findById(taskId).orElseThrow();
+        return commentRepository.findByTask(task).stream()
+                .map(comment -> CommentResponse.builder()
+                        .id(comment.getId())
+                        .content(comment.getContent())
+                        .userEmail(comment.getUser().getEmail())
+                        .userFullName(comment.getUser().getFullName())
+                        .createdAt(comment.getCreatedAt())
+                        .build())
                 .collect(Collectors.toList());
     }
 

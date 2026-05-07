@@ -3,8 +3,10 @@ export interface Task {
   title: string;
   description: string;
   status: string;
+  priority: string;
+  deadline: string;
   projectId: number;
-  assignedToUserId: string;
+  assignedToEmail: string;
   projectName?: string;
 }
 
@@ -12,7 +14,9 @@ export interface CreateTaskModel {
   title: string;
   description: string;
   projectId: number;
-  assignedToUserId: string;
+  assignedToEmail: string;
+  priority: string;
+  deadline: string;
 }
 
 export interface UpdateStatusModel {
