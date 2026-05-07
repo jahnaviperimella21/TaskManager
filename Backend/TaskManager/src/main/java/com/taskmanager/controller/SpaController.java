@@ -5,8 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class SpaController {
+    // Forward all non-API, non-static, non-health requests to index.html
     @RequestMapping(value = { "/", "/{path:[^\\.]*}", "/**/{path:[^\\.]*}" })
-    public String redirect() {
+    public String redirect(String path) {
+        if (path != null && (path.startsWith("api") || path.startsWith("health") || path.contains("."))) {
+            return null; // Let Spring handle it normally
+        }
         return "forward:/index.html";
     }
 }

@@ -62,7 +62,8 @@ public class WebSecurityConfig {
                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers("/health").permitAll()
-                                .requestMatchers("/", "/index.html", "/*.js", "/*.css", "/*.ico", "/assets/**").permitAll()
+                                .requestMatchers("/", "/index.html", "/*.js", "/*.css", "/*.ico", "/assets/**", "/static/**", "/public/**").permitAll()
+                                .requestMatchers("/favicon.ico", "/**/*.js", "/**/*.css", "/**/*.png", "/**/*.jpg", "/**/*.svg").permitAll()
                                 .anyRequest().authenticated()
                 );
 
